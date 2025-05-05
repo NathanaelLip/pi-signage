@@ -1,43 +1,5 @@
-# sudo apt-get update -qq
-
-# sudo apt-get install --no-install-recommends xserver-xorg-video-all \
-#   xserver-xorg-input-all xserver-xorg-core xinit x11-xserver-utils \
-#   chromium-browser unclutter
-
-# echo "System Options > Boot / Auto Login > Console Autologin | Press Enter | Right arrow key twice > Finish
-# sudo raspi-config
-
-# sudo nano /home/pi/.bash_profile
-
-# if [ -z $DISPLAY ] && [ $(tty) = /dev/tty1 ]
-# then
-#   startx
-# fi
-
-# sudo nano /home/pi/.xinitrc
-
-# #!/usr/bin/env sh
-# xset -dpms
-# xset s off
-# xset s noblank
-
-# unclutter &
-# chromium-browser https://yourfancywebsite.com \
-#   --window-size=1920,1080 \
-#   --window-position=0,0 \
-#   --start-fullscreen \
-#   --kiosk \
-#   --incognito \
-#   --noerrdialogs \
-#   --disable-translate \
-#   --no-first-run \
-#   --fast \
-#   --fast-start \
-#   --disable-infobars \
-#   --disable-features=TranslateUI \
-#   --disk-cache-dir=/dev/null \
-#   --overscroll-history-navigation=0 \
-#   --disable-pinch
+https://die-antwort.eu/techblog/2017-12-setup-raspberry-pi-for-kiosk-mode/
+https://pimylifeup.com/raspberry-pi-nginx/
 
 # Nginx
 sudo apt update
@@ -50,7 +12,11 @@ sudo apt install nginx
 sudo systemctl start nginx
 
 # PHP
-sudo apt install php7.4-fpm php7.4-mbstring php7.4-mysql php7.4-curl php7.4-gd php7.4-curl php7.4-zip php7.4-xml -y
+sudo apt install lsb-release
+curl https://packages.sury.org/php/apt.gpg | sudo tee /usr/share/keyrings/suryphp-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/suryphp-archive-keyring.gpg] https://packages.sury.org/php/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
+sudo apt update
+sudo apt install php8.1-fpm php8.1-mbstring php8.1-mysql php8.1-curl php8.1-gd php8.1-curl php8.1-zip php8.1-xml -y
 
 sudo nano /etc/nginx/sites-enabled/default
 # add index.php to line where it says "Add index.php to the list if you are using PHP"
@@ -73,6 +39,17 @@ sudo nano /etc/nginx/sites-enabled/default
 
 sudo systemctl reload nginx
 
+# Git to access the files
+sudo apt install git
+
+cd /var/www/html/
+
+sudo git clone https://github.com/NathanaelLip/pi-signage.git
+
+cd pi-signage
+
+sudo mv * ../
+
 
 # Setup chrome
 sudo apt-get update
@@ -81,3 +58,20 @@ sudo apt-get upgrade
 sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
 
 sudo apt-get install --no-install-recommends chromium-browser
+
+sudo nano /etc/xdg/openbox/autostart
+
+echo "# Disable any form of screen saver / screen blanking / power management
+xset s off
+xset s noblank
+xset -dpms
+
+# Allow quitting the X server with CTRL-ATL-Backspace
+setxkbmap -option terminate:ctrl_alt_bksp
+
+# Start Chromium in kiosk mode
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+chromium-browser --disable-infobars --kiosk 'http://rasberrypi.local'"
+
+sudo nano ~/.bash_profile

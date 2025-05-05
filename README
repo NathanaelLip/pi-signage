@@ -1,0 +1,5 @@
+# Pi-Signage
+
+Pi-Signage is a web applcation designed to host simple one page slideshows on my Raspberry Pi's but could be used on any device connected to a display.
+
+Thanks to the fact it is all web based, this allows for smooth transitions, video playback (with animations),
