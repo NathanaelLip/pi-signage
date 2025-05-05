@@ -12,6 +12,7 @@ sudo apt install nginx && sudo systemctl start nginx
 ```
 
 # PHP
+#### For Raspbian
 ```
 sudo apt install lsb-release
 ```
@@ -31,6 +32,11 @@ sudo apt update
 
 ```
 sudo apt install php8.1-fpm php8.1-mbstring php8.1-mysql php8.1-curl php8.1-gd php8.1-curl php8.1-zip php8.1-xml -y
+```
+
+#### For Ubuntu
+```
+sudo apt install php
 ```
 
 ```
@@ -84,26 +90,32 @@ sudo apt-get install --no-install-recommends xserver-xorg x11-xserver-utils xini
 ```
 sudo apt-get install --no-install-recommends chromium-browser
 ```
+
+#### Set Chromium settings
 ```
 sudo nano /etc/xdg/openbox/autostart
 ```
-#### Disable any form of screen saver / screen blanking / power management
+Add to file
 ```
+# Disable any form of screen saver / screen blanking / power management
 xset s off
 xset s noblank
 xset -dpms
-```
-#### Allow quitting the X server with CTRL-ATL-Backspace
-```
+
+# Allow quitting the X server with CTRL-ATL-Backspace
 setxkbmap -option terminate:ctrl_alt_bksp
+
+# Start Chromium in kiosk mode
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State'
+sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences
+chromium-browser --disable-infobars --kiosk 'http://127.0.0.1'"
 ```
 
-#### Start Chromium in kiosk mode
+# Start chromium page
 ```
-sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' ~/.config/chromium/'Local State' && 
-sed -i 's/"exited_cleanly":false/"exited_cleanly":true/; s/"exit_type":"[^"]\+"/"exit_type":"Normal"/' ~/.config/chromium/Default/Preferences chromium-browser --disable-infobars --kiosk 'http://127.0.0.1'"
+startx -- -nocursor
 ```
-*Note: If you have setup a device hostname (something.local), using something like the pi imager or other manual setup, use that here. Otherwise, set it to your device IP. (Find it using ifconfig)* 
-```
-sudo nano ~/.bash_profile
-```
+
+Now go to either the `device.local/slides.html` address or the `ip of device on network eg. 192.168.0.1/slides.html` to edit the slides it uses.
+
+<sub>Install instructions based on these guides by: [die-antwork](https://die-antwort.eu/techblog/2017-12-setup-raspberry-pi-for-kiosk-mode/) and [pimylifeup](https://pimylifeup.com/raspberry-pi-nginx/)</sub>
