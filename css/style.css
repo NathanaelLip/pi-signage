@@ -1,0 +1,364 @@
+:root {
+  --background: #040606;
+  --primary: #b00d28;
+  --secondary: #793535;
+  --accent: #96594a;
+  --text: #e7edef;
+  --save: #90c39f;
+  --cancel: #ba7b7b;
+}
+
+.name {
+    text-shadow: -0.2rem 0.25rem var(--primary);
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 75%;
+  margin: auto;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+@media screen and (max-width: 1372px) {
+  body {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  body {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 807px) {
+  body {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    width: 90%;
+  }
+}
+
+#upload-section,
+#file-list-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 0.5rem;
+}
+
+.upload-text {
+    justify-items: center;
+}
+
+#file-list-section h2 {
+    padding: 1rem;
+    width: 95%;
+    border-bottom: 3px solid var(--primary);
+}
+
+#file-list ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-evenly;
+}
+
+#file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  /* border-bottom: 2px solid var(--accent); */
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+#file-list li:last-child {
+  border-bottom: none;
+}
+
+.image {
+  max-width: 300px;
+  border-radius: 0.5rem;
+}
+
+.video {
+  max-width: 300px;
+}
+
+#file-input {
+  background-color: var(--primary);
+  color: var(--text);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+}
+
+@media screen and (max-width: 1000px) {
+  #file-input {
+    margin-bottom: 1rem;
+    width: 90%;
+  }
+}
+
+#upload-section button {
+  background-color: var(--primary);
+  color: var(--text);
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+}
+
+.file-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.file-actions button {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+}
+
+.file-actions .download,
+.file-actions .toggle {
+  fill: var(--text);
+}
+
+@media screen and (max-width: 526px) {
+  .file-actions {
+    width: 100%;
+    flex: auto;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .file-actions button {
+    margin: 0;
+  }
+}
+
+.disabled-slide .file-actions .toggle {
+  background-color: var(--accent);
+}
+
+.disabled-slide .file-actions .toggle svg {
+  fill: var(--text);
+}
+
+#storage-left {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
+
+.file-info {
+  fill: var(--text);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1rem;
+  align-content: center;
+}
+
+@media screen and (max-width: 526px) {
+  .file-info svg {
+    display: none;
+  }
+}
+
+.filename {
+  fill: var(--text);
+}
+
+@media screen and (max-width: 950px) {
+  .filename {
+    margin-bottom: 1rem !important;
+    width: 85%;
+  }
+
+  .seconds {
+    margin-bottom: 1rem !important;
+    width: 85%;
+  }
+}
+
+.seconds {
+  fill: var(--text);
+}
+
+.edit {
+  background-color: var(--primary);
+  fill: var(--text);
+}
+
+.download {
+  background-color: var(--primary);
+}
+
+.toggle {
+  background-color: var(--secondary);
+}
+
+.delete {
+  background-color: var(--primary);
+  fill: var(--text);
+}
+
+.save {
+  background-color: var(--save);
+}
+
+.cancel {
+  background-color: var(--cancel);
+}
+
+input[type="text"] {
+  border-radius: 0.5rem;
+  background: var(--secondary);
+  color: var(--text);
+  padding: 0.5rem;
+  display: inline-block;
+  width: calc(100% - 1rem);
+  /* margin: 0rem 0.5rem; */
+}
+
+input[type="text"]:disabled {
+  border-radius: 0.5rem;
+  background: var(--accent);
+  color: var(--text);
+  padding: 0.5rem;
+  display: inline-block;
+  width: calc(100% - 1rem);
+  /* margin: 0rem 0.5rem; */
+}
+
+label {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  background-color: transparent;
+  border-color: var(--text);
+  color: var(--text);
+  padding: 7.5rem 22.5rem;
+  font-family: sans-serif;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: var(--text) 8px dashed;
+  font-size: 72px;
+  font-weight: 600;
+  text-transform: uppercase;
+  fill: var(--text);
+  opacity: 50%;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+label:hover {
+  opacity: 100%;
+}
+
+@media screen and (max-width: 1660px) {
+  label {
+    padding: 7.5rem 17rem;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  label {
+    padding: 7.5rem 15rem;
+  }
+}
+
+@media screen and (max-width: 1340px) {
+  label {
+    padding: 6.5rem 12rem;
+  }
+}
+
+@media screen and (max-width: 1212px) {
+  label {
+    padding: 5rem 6rem;
+  }
+}
+
+@media screen and (max-width: 956px) {
+  label {
+    padding: 4rem 5rem;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  label {
+    padding: 2rem 3rem;
+    font-size: 48px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  label {
+    padding: 2rem 3.5rem;
+    font-size: 36px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  label {
+    padding: 1rem 2.5rem;
+    font-size: 24px;
+  }
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+}
+
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+.navbar li {
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  flex-wrap: wrap;
+  transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.navbar li:hover {
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary);
+}
+
+.navbar a {
+  text-decoration: none;
+}

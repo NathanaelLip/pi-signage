@@ -4,7 +4,7 @@
 // - Validate the new filename to ensure it's acceptable.
 // - Implement proper authentication and authorization to control who can rename files.
 
-$uploadDirectory = 'uploads/';
+$uploadDirectory = '../uploads/';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['old_name']) && isset($_POST['new_name'])) {
     $oldName = basename($_POST['old_name']); // Sanitize
@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['old_name']) && isset(
 
     if (file_exists($oldPath)) {
         if (rename($oldPath, $newPath)) {
-            if (file_exists('update.false')) { 
-                rename('update.false', 'update.true');
+            if (file_exists('../update.false')) { 
+                rename('../update.false', '../update.true');
             }
             header('Content-Type: application/json');
             echo json_encode(['message' => 'File renamed successfully.']);

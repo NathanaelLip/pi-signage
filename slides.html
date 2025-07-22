@@ -3,173 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slides</title>
-    <style>
-        :root {
-            --background: #040606;
-            --primary: #abc1c6;
-            --secondary: #594465;
-            --accent: #a87ea0;
-            --text: #e7edef;
-            --save: #abc6b3;
-            --cancel: #b09595;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            width: 50%;
-            margin: auto;
-            background-color: var(--background);
-            color: var(--text)
-        }
-
-        #upload-section,
-        #file-list-section {
-            margin-top: 20px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: rgba(168, 126, 160, 0.1);
-            border-radius: 15px;
-        }
-
-        #file-list ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        #file-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 0;
-            border-bottom: 2px solid var(--accent);
-            flex-wrap: wrap;
-        }
-
-        #file-list li:last-child {
-            border-bottom: none;
-        }
-
-        #file-input {
-            background-color: var(--primary);
-            color: var(--background);
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            border: none;
-        }
-
-        #upload-section button {
-            background-color: var(--primary);
-            color: var(--background);
-            padding: 0.7rem;
-            border-radius: 0.5rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            border: none;
-        }
-
-        .file-actions button {
-            margin-left: 10px;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            border: none;
-        }
-
-        .disabled-slide {
-            font-style: italic;
-            color: var(--accent);
-        }
-
-        #storage-left {
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .file-info {
-            fill: var(--text);
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        @media screen and (max-width: 600px) {
-            .file-info svg {
-                display: none;
-            }
-        }
-
-        .filename {
-            fill: var(--text);
-        }
-
-        .seconds {
-            fill: var(--text);
-        }
-
-        .edit {
-            background-color: var(--secondary);
-            fill: var(--text);
-        }
-
-        .download {
-            background-color: var(--primary);
-            /* fill: var(--text); */
-        }
-
-        .toggle {
-            background-color: var(--primary);
-        }
-
-        .delete {
-            background-color: var(--accent);
-        }
-
-        .save {
-            background-color: var(--save);
-        }
-
-        .cancel {
-            background-color: var(--cancel);
-        }
-
-        input[type=text] {
-            border-radius: 0.5rem;
-            background: var(--primary);
-            color: var(--background);
-            padding: 0.5rem;
-            display: inline-block;
-            margin: 0rem 0.5rem;
-        }
-
-        input[type=text]:disabled {
-            border-radius: 0.5rem;
-            background: var(--secondary);
-            color: var(--text);
-            padding: 0.5rem;
-            display: inline-block;
-            margin: 0rem 0.5rem;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+    <nav class="navbar">
+        <h1 class="name">PI-SIGNAGE</h1>
 
+        <ul>
+            <a href="./slides.html">
+                <li>Slides</li>
+            </a>
+            <a href="./preview.html">
+                <li>Preview</li>
+            </a>
+        </ul>
+    </nav>
     <div id="upload-section">
-        <h2>Upload Files</h2>
-        <input type="file" id="file-input" multiple>
-        <!-- <input type="number" id="duration" value="10">Seconds</input> -->
-        <button onclick="uploadFiles()">Upload Selected Files</button>
+        <!-- <h2>Upload Files</h2> -->
+        <div style="display: flex; justify-content: center; padding: 1rem;">
+            <input type="file" id="file-input" multiple hidden>
+            <label for="file-input"><span>CLICK TO</span><svg xmlns="http://www.w3.org/2000/svg" height="92px"
+                    viewBox="0 -960 960 960" width="92px" fill="">
+                    <path
+                        d="M440-200h80v-167l64 64 56-57-160-160-160 160 57 56 63-63v167ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
+                </svg></label>
+        </div>
         <div id="upload-progress"></div>
     </div>
 
     <div id="file-list-section">
-        <h2>Uploaded Files</h2>
+        <div class="upload-text">
+            <h2>Uploaded Files</h2>
+        </div>
+
         <div id="file-list">
             <!-- <p>No files uploaded yet.</p> -->
             <ul>
@@ -188,7 +58,11 @@
         const fileListContainer = document.getElementById('file-list');
         const fileListUl = document.querySelector('#file-list ul');
 
-        let uploadedFiles = []; // Array to store client-side file information
+        let uploadedFiles = [];
+
+        document.getElementById("file-input").onchange = function () {
+            uploadFiles()
+        }
 
         function uploadFiles() {
             const files = fileInput.files;
@@ -197,36 +71,32 @@
                 return;
             }
 
-            uploadProgress.innerHTML = 'Uploading...'; // Simple feedback
+            uploadProgress.innerHTML = 'Uploading...';
 
             const formData = new FormData();
             for (let i = 0; i < files.length; i++) {
-                formData.append('files[]', files[i]); // 'files[]' for multiple uploads on the server
+                formData.append('files[]', files[i]);
             }
 
             formData.append('duration', duration);
 
-            // Replace '/upload.php' with the actual path to your PHP upload script
-            fetch('/upload.php', {
+            fetch('php/upload.php', {
                 method: 'POST',
                 body: formData,
             })
                 .then(response => response.json())
                 .then(data => {
                     uploadProgress.innerHTML = 'Upload complete.';
-                    // console.log('Server response:', data);
-                    // Assuming the server sends back an array of uploaded file information
                     if (Array.isArray(data)) {
-                        // Instead of directly pushing, let's refetch the file list
                         fetchFileList();
                     } else if (data && data.message) {
                         alert(data.message);
                     } else {
                         alert('Upload successful.');
-                        fetchFileList(); // Refetch after successful upload
+                        fetchFileList();
                     }
-                    fileInput.value = ''; // Clear the file input
-                    duration.value = '10'; // Clear the file input
+                    fileInput.value = '';
+                    duration.value = '10';
                 })
                 .catch(error => {
                     uploadProgress.innerHTML = 'Upload failed.';
@@ -236,26 +106,25 @@
         }
 
         function fetchFileList() {
-            // Replace '/files' with the actual path to your PHP file listing endpoint
-            fetch('/upload.php', {
+            fetch('php/upload.php', {
                 method: 'GET',
             })
                 .then(response => response.json())
                 .then(data => {
-                    uploadedFiles = data; // Update the client-side array
+                    uploadedFiles = data;
                     displayFileList();
                 })
                 .catch(error => {
                     console.error('Error fetching file list:', error);
                     fileListContainer.innerHTML = '<p>Error loading file list.</p><ul></ul>';
-                    fileListUl = document.querySelector('#file-list ul'); // Re-select
+                    fileListUl = document.querySelector('#file-list ul');
                 });
         }
 
         function displayFileList() {
             if (uploadedFiles.length === 0) {
                 fileListContainer.innerHTML = '<p>No files uploaded yet.</p><ul></ul>';
-                fileListUl = document.querySelector('#file-list ul'); // Re-select
+                fileListUl = document.querySelector('#file-list ul');
                 return;
             }
 
@@ -263,6 +132,8 @@
             uploadedFiles.forEach((fileInfo, index) => {
                 const listItem = document.createElement('li');
                 const isEnabled = !fileInfo.name.endsWith('.disabled');
+                const filePath = fileInfo.name;
+                const fileType = fileInfo.name.split('.').pop();
                 const fileName = fileInfo.name.split('~').pop();
                 const duration = fileInfo.name.split('~').slice(-2)[0]
 
@@ -270,10 +141,14 @@
 
                 listItem.innerHTML = `
                     <div class="file-info">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
+                        <image src="uploads/${filePath}" class="image" id="image-${index}" />
+                        <video class="video" controls id="video-${index}">
+                            <source src="uploads/${filePath}" type="video/mp4">
+                            <source src="uploads/${filePath}" type="video/mkv">
+                            Your browser does not support the video tag.
+                        </video>
                         <input class="filename" type="text" id="filename-${index}" value="${fileName}" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M330-270h80v-340H290v80h40v260Zm200 0h60q33 0 56.5-23.5T670-350v-180q0-33-23.5-56.5T590-610h-60q-33 0-56.5 23.5T450-530v180q0 33 23.5 56.5T530-270Zm0-80v-180h60v180h-60ZM360-840v-80h240v80H360ZM480-80q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z"/></svg>
-                        <input class="seconds" type="text" id="duration-${index}" value="${duration}" disabled>
+                        <input class="seconds" type="text" id="duration-${index}" value="${duration}"  disabled>
                     </div>
                     <div class="file-actions">
                         <button class="edit" id="edit-${index}" onclick="enableEdit(${index})"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/></svg></button>
@@ -285,6 +160,13 @@
                     </div>
                 `;
                 fileListUl.appendChild(listItem);
+
+                if (fileType === 'mkv' || fileType === 'mp4') {
+                    document.getElementById(`video-${index}`).style.display = 'block';
+                    document.getElementById(`image-${index}`).style.display = 'none';
+                } else {
+                    document.getElementById(`video-${index}`).style.display = 'none';
+                }
             });
         }
 
@@ -293,16 +175,16 @@
             document.getElementById(`duration-${index}`).disabled = false;
             document.getElementById(`save-${index}`).style.display = 'inline-block';
             document.getElementById(`cancel-${index}`).style.display = 'inline-block';
-            document.getElementById(`edit-${index}`).style.display = 'none'; // Hide Edit button
+            document.getElementById(`edit-${index}`).style.display = 'none';
         }
 
         function cancelEdit(index, originalName) {
-            document.getElementById(`filename-${index}`).value = originalName;
+            document.getElementById(`filename-${index}`).value = originalName.split('~').pop();
             document.getElementById(`filename-${index}`).disabled = true;
             document.getElementById(`duration-${index}`).disabled = true;
             document.getElementById(`save-${index}`).style.display = 'none';
             document.getElementById(`cancel-${index}`).style.display = 'none';
-            document.getElementById(`edit-${index}`).style.display = 'inline-block'; // Show Edit button
+            document.getElementById(`edit-${index}`).style.display = 'inline-block';
         }
 
         function saveFilename(oldName, index) {
@@ -322,8 +204,7 @@
                 mergeName = newDur + '~' + newName
             }
 
-            // **Important:** You need to send a request to the server to actually rename the file.
-            fetch('/rename.php', { // Create a new PHP file for renaming
+            fetch('php/rename.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -333,7 +214,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === 'File renamed successfully.') {
-                        fetchFileList(); // Refresh the file list to show the new name
+                        fetchFileList();
                     } else {
                         alert(`Error renaming file: ${data.error || 'Unknown error'}`);
                     }
@@ -348,7 +229,7 @@
             const isDisabled = filename.endsWith('.disabled');
             const newFilename = isDisabled ? filename.slice(0, -'.disabled'.length) : filename + '.disabled';
 
-            fetch('/rename.php', {
+            fetch('php/rename.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -358,7 +239,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.message === 'File renamed successfully.') {
-                        fetchFileList(); // Refresh the file list
+                        fetchFileList();
                     } else {
                         alert(`Error toggling status: ${data.error || 'Unknown error'}`);
                     }
@@ -375,8 +256,7 @@
 
         function deleteFile(filename, index) {
             if (confirm(`Are you sure you want to delete ${filename}?`)) {
-                // Replace '/delete.php' with the actual path to your PHP delete script
-                fetch('/upload.php', {
+                fetch('php/upload.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
@@ -386,7 +266,6 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.message === 'File deleted successfully.') {
-                            // Instead of just splicing the client-side array, refetch the list
                             fetchFileList();
                         } else {
                             alert(`Error deleting file: ${data.error || 'Unknown error'}`);
@@ -409,7 +288,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             function calcStorage() {
-                fetch('/storage.php')
+                fetch('php/storage.php')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
@@ -433,10 +312,9 @@
                     });
             }
 
-            calcStorage(); // Call the function directly after the DOM is ready
+            calcStorage();
         });
 
-        // Fetch the initial list of files when the page loads
         window.onload = fetchFileList;
     </script>
 

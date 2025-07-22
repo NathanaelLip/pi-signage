@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$uploadDir = 'uploads/'; // Path to your uploads directory
+$uploadDir = '../uploads/'; // Path to your uploads directory
 
 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'mp4', 'mkv', 'webm', 'ogg'];
 $imageFiles = [];

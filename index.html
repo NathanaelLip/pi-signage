@@ -59,7 +59,7 @@
 
         async function loadImagesAndVideos() {
             try {
-                const response = await fetch('get_media.php');
+                const response = await fetch('/php/get_media.php');
                 const data = await response.json();
                 const mediaFiles = data;
 
@@ -156,7 +156,7 @@
             const outputDiv = document.getElementById('output');
             function infiniteDelayedLoop() {
                 function loopIteration() {
-                    fetch('/checkforupdates.php', { method: 'GET' }).then(response => {
+                    fetch('/php/checkforupdates.php', { method: 'GET' }).then(response => {
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
                         }
