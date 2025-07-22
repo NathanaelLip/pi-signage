@@ -42,6 +42,19 @@ sudo apt install php
 ```
 sudo nano /etc/nginx/sites-enabled/default
 ```
+
+**Find**
+```location / {```
+
+**Add**
+```
+if ($request_uri ~ ^/(.*)\.html(\?|$)) {
+	return 302 /$1;
+}
+try_files $uri $uri.html $uri/ =404;
+```
+*Removes .html from the end of your URLS*
+
 Find *"Add index.php to the list if you are using PHP"* and do what it says
 
 **Find**
